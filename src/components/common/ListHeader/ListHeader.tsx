@@ -1,3 +1,7 @@
+import {
+  FontAwesomeIcon,
+  FontAwesomeIconProps,
+} from "@fortawesome/react-fontawesome";
 import "./ListHeader.css";
 
 type ListHeaderProps = {
@@ -5,6 +9,7 @@ type ListHeaderProps = {
   isIndeterminate: boolean;
   selectedCount: number;
   actionLabel: string;
+  actionIcon?: FontAwesomeIconProps["icon"];
   toggleSelectAll: () => void;
   onAction: () => void;
 };
@@ -14,6 +19,7 @@ const ListHeader = ({
   isIndeterminate,
   selectedCount,
   actionLabel,
+  actionIcon,
   toggleSelectAll,
   onAction,
 }: ListHeaderProps) => {
@@ -29,6 +35,7 @@ const ListHeader = ({
         {selectedCount > 0 ? `Selected ${selectedCount}` : "None Selected"}
       </span>
       <button disabled={selectedCount === 0} onClick={onAction}>
+        {actionIcon && <FontAwesomeIcon icon={actionIcon} />}
         {actionLabel}
       </button>
     </div>

@@ -26,4 +26,8 @@
 .list-header input[type="checkbox"] {
     cursor: pointer;
 }
+
+.list-header button .svg-inline--fa {
+    margin-right: 8px;
+}
   

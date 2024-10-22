@@ -4,12 +4,25 @@ import ListHeader from "../common/ListHeader/ListHeader";
 import Table from "../common/Table/Table";
 import { File } from "../../types/types";
 import "./FileDownloadComponent.css";
+import { faCircle, faDownload } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const columns: any = [
   { header: "Name", key: "name" },
   { header: "Device", key: "device" },
   { header: "Path", key: "path" },
-  { header: "Status", key: "status" },
+  {
+    header: "Status",
+    key: "status",
+    render: (file: File) =>
+      file.status === "available" ? (
+        <span>
+          <FontAwesomeIcon icon={faCircle} color="green" /> Available
+        </span>
+      ) : (
+        <span>Scheduled</span>
+      ),
+  },
 ];
 
 const FileDownloadComponent = () => {
@@ -57,6 +70,7 @@ const FileDownloadComponent = () => {
         isIndeterminate={isIndeterminate}
         selectedCount={selectedFiles.length}
         actionLabel="Download Selected"
+        actionIcon={faDownload}
         toggleSelectAll={toggleSelectAll}
         onAction={handleDownload}
       />
