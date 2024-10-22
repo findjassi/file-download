@@ -1,4 +1,10 @@
-import { render, screen, waitFor, fireEvent } from "@testing-library/react";
+import {
+  render,
+  screen,
+  waitFor,
+  fireEvent,
+  act,
+} from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
 import FileDownloadComponent from "./FileDownloadComponent";
 import { fetchFiles } from "../../services/fileService";
@@ -39,7 +45,9 @@ describe("FileDownloadComponent", () => {
   });
 
   test("renders the component", async () => {
-    render(<FileDownloadComponent />);
+    await act(async () => {
+      render(<FileDownloadComponent />);
+    });
 
     await waitFor(() => {
       expect(screen.getByText("File Download Component")).toBeInTheDocument();
@@ -51,7 +59,9 @@ describe("FileDownloadComponent", () => {
   });
 
   test("selects and deselects individual files", async () => {
-    render(<FileDownloadComponent />);
+    await act(async () => {
+      render(<FileDownloadComponent />);
+    });
 
     await waitFor(() => {
       expect(screen.getByText("smss.exe")).toBeInTheDocument();
@@ -69,7 +79,9 @@ describe("FileDownloadComponent", () => {
   });
 
   test("selects and deselects all available files", async () => {
-    render(<FileDownloadComponent />);
+    await act(async () => {
+      render(<FileDownloadComponent />);
+    });
 
     await waitFor(() => {
       expect(screen.getByText("smss.exe")).toBeInTheDocument();
@@ -92,22 +104,24 @@ describe("FileDownloadComponent", () => {
   });
 
   test("handles downloading selected files", async () => {
-    render(<FileDownloadComponent />);
+    await act(async () => {
+      render(<FileDownloadComponent />);
+    });
 
     await waitFor(() => {
       expect(screen.getByText("smss.exe")).toBeInTheDocument();
-
-      const firstCheckbox = screen.getAllByRole("checkbox")[1];
-      fireEvent.click(firstCheckbox);
-
-      const downloadButton = screen.getByRole("button", {
-        name: "Download Selected",
-      });
-      fireEvent.click(downloadButton);
-
-      expect(window.alert).toHaveBeenCalledWith(
-        "Downloading: \nDevice A: /path/smss.exe"
-      );
     });
+
+    const firstCheckbox = screen.getAllByRole("checkbox")[1];
+    fireEvent.click(firstCheckbox);
+
+    const downloadButton = screen.getByRole("button", {
+      name: /Download Selected/i,
+    });
+    fireEvent.click(downloadButton);
+
+    expect(window.alert).toHaveBeenCalledWith(
+      "Downloading: \nDevice A: /path/smss.exe"
+    );
   });
 });
