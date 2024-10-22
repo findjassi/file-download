@@ -1,9 +1,15 @@
-import React from 'react';
-import { render, screen } from '@testing-library/react';
-import App from './App';
+import { render, screen } from "@testing-library/react";
+import App from "./App";
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+jest.mock(
+  "./components/FileDownloadComponent/FileDownloadComponent",
+  () => () => <div>Mock FileDownloadComponent</div>
+);
+
+describe("App Component", () => {
+  test("renders FileDownloadComponent", () => {
+    render(<App />);
+
+    expect(screen.getByText("Mock FileDownloadComponent")).toBeInTheDocument();
+  });
 });
