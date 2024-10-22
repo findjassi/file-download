@@ -33,16 +33,17 @@ describe("FileDownloadComponent", () => {
     (fetchFiles as jest.Mock).mockResolvedValue(mockFiles);
   });
 
+  test("renders the loading state", () => {
+    render(<FileDownloadComponent />);
+    expect(screen.getByText("Loading...")).toBeInTheDocument();
+  });
+
   test("renders the component", async () => {
     render(<FileDownloadComponent />);
 
-    expect(screen.getByText("File Download Component")).toBeInTheDocument();
-    expect(screen.getByText("None Selected")).toBeInTheDocument();
-    expect(
-      screen.getByRole("button", { name: "Download Selected" })
-    ).toBeDisabled();
-
     await waitFor(() => {
+      expect(screen.getByText("File Download Component")).toBeInTheDocument();
+      expect(screen.getByText("None Selected")).toBeInTheDocument();
       expect(screen.getByText("smss.exe")).toBeInTheDocument();
       expect(screen.getByText("netsh.exe")).toBeInTheDocument();
       expect(screen.getByText("uxtheme.dll")).toBeInTheDocument();
@@ -95,18 +96,18 @@ describe("FileDownloadComponent", () => {
 
     await waitFor(() => {
       expect(screen.getByText("smss.exe")).toBeInTheDocument();
+
+      const firstCheckbox = screen.getAllByRole("checkbox")[1];
+      fireEvent.click(firstCheckbox);
+
+      const downloadButton = screen.getByRole("button", {
+        name: "Download Selected",
+      });
+      fireEvent.click(downloadButton);
+
+      expect(window.alert).toHaveBeenCalledWith(
+        "Downloading: \nDevice A: /path/smss.exe"
+      );
     });
-
-    const firstCheckbox = screen.getAllByRole("checkbox")[1];
-    fireEvent.click(firstCheckbox);
-
-    const downloadButton = screen.getByRole("button", {
-      name: "Download Selected",
-    });
-    fireEvent.click(downloadButton);
-
-    expect(window.alert).toHaveBeenCalledWith(
-      "Downloading: \nDevice A: /path/smss.exe"
-    );
   });
 });

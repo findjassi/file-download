@@ -28,11 +28,25 @@ const columns: any = [
 const FileDownloadComponent = () => {
   const [files, setFiles] = useState<File[]>([]);
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
+  const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const availableFiles = files.filter((file) => file.status === "available");
 
   useEffect(() => {
-    fetchFiles().then(setFiles);
+    const fetchData = async () => {
+      try {
+        const filesData = await fetchFiles();
+        setFiles(filesData);
+        setError(null);
+      } catch (err) {
+        setError("Something went wrong. Please try again later.");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
   }, []);
 
   const toggleFileSelection = (file: File) => {
@@ -61,28 +75,34 @@ const FileDownloadComponent = () => {
   const isIndeterminate = selectedFiles.length > 0 && !isAllSelected;
 
   return (
-    <div className="file-download-component">
-      <h1>File Download Component</h1>
+    <>
+      {isLoading && <div>Loading...</div>}
+      {error && <div>{error}</div>}
+      {!error && !isLoading && (
+        <div className="file-download-component">
+          <h1>File Download Component</h1>
 
-      {/* ListHeader */}
-      <ListHeader
-        isAllSelected={isAllSelected}
-        isIndeterminate={isIndeterminate}
-        selectedCount={selectedFiles.length}
-        actionLabel="Download Selected"
-        actionIcon={faDownload}
-        toggleSelectAll={toggleSelectAll}
-        onAction={handleDownload}
-      />
+          {/* ListHeader */}
+          <ListHeader
+            isAllSelected={isAllSelected}
+            isIndeterminate={isIndeterminate}
+            selectedCount={selectedFiles.length}
+            actionLabel="Download Selected"
+            actionIcon={faDownload}
+            toggleSelectAll={toggleSelectAll}
+            onAction={handleDownload}
+          />
 
-      {/* Table Component */}
-      <Table
-        items={files}
-        columns={columns}
-        selectedItems={selectedFiles}
-        onSelectItem={toggleFileSelection}
-      />
-    </div>
+          {/* Table Component */}
+          <Table
+            items={files}
+            columns={columns}
+            selectedItems={selectedFiles}
+            onSelectItem={toggleFileSelection}
+          />
+        </div>
+      )}
+    </>
   );
 };
 
