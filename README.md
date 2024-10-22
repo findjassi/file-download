@@ -1,6 +1,18 @@
+
+## File Download component preview
+
+https://github.com/user-attachments/assets/c07d07a1-e5bd-4c0f-8be0-95048f490aa1
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+## How to run this project
+
+1. Clone the repo.
+2. Install the dependencies using `npm install`.
+3. `npm start` to run the app in development mode.
+4. Run the tests using `npm test`.
 
 ## Available Scripts
 
@@ -44,3 +56,6 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+
+
