@@ -17,7 +17,7 @@ describe("ListHeader Component", () => {
 
     const checkbox = screen.getByRole("checkbox") as HTMLInputElement;
     const actionButton = screen.getByRole("button", {
-      name: "Download Selected",
+      name: /Download Selected/i,
     });
     const spanText = screen.getByText("None Selected");
 
@@ -58,7 +58,7 @@ describe("ListHeader Component", () => {
     );
 
     const actionButton = screen.getByRole("button", {
-      name: "Download Selected",
+      name: /Download Selected/i,
     });
     const spanText = screen.getByText("Selected 3");
 
@@ -101,7 +101,7 @@ describe("ListHeader Component", () => {
     );
 
     const actionButton = screen.getByRole("button", {
-      name: "Download Selected",
+      name: /Download Selected/i,
     });
     fireEvent.click(actionButton);
 

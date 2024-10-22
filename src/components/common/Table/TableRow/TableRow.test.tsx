@@ -21,12 +21,16 @@ const columns: TableColumn<MockFile>[] = [
 describe("TableRow component", () => {
   test("renders the row data correctly", () => {
     render(
-      <TableRow
-        item={mockFile}
-        columns={columns}
-        isSelected={false}
-        onSelect={() => {}}
-      />
+      <table>
+        <tbody>
+          <TableRow
+            item={mockFile}
+            columns={columns}
+            isSelected={false}
+            onSelect={() => {}}
+          />
+        </tbody>
+      </table>
     );
 
     expect(screen.getByText("file1.txt")).toBeInTheDocument();
@@ -35,12 +39,16 @@ describe("TableRow component", () => {
 
   test("checkbox is checked when row is selected", () => {
     render(
-      <TableRow
-        item={mockFile}
-        columns={columns}
-        isSelected={true}
-        onSelect={() => {}}
-      />
+      <table>
+        <tbody>
+          <TableRow
+            item={mockFile}
+            columns={columns}
+            isSelected={true}
+            onSelect={() => {}}
+          />
+        </tbody>
+      </table>
     );
 
     expect(screen.getByRole("checkbox")).toBeChecked();
@@ -48,12 +56,16 @@ describe("TableRow component", () => {
 
   test("checkbox is not checked when row is not selected", () => {
     render(
-      <TableRow
-        item={mockFile}
-        columns={columns}
-        isSelected={false}
-        onSelect={() => {}}
-      />
+      <table>
+        <tbody>
+          <TableRow
+            item={mockFile}
+            columns={columns}
+            isSelected={false}
+            onSelect={() => {}}
+          />
+        </tbody>
+      </table>
     );
 
     expect(screen.getByRole("checkbox")).not.toBeChecked();
@@ -61,15 +73,19 @@ describe("TableRow component", () => {
 
   test("checkbox is disabled when status is not 'available'", () => {
     render(
-      <TableRow
-        item={{
-          name: "file2.txt",
-          status: "scheduled",
-        }}
-        columns={columns}
-        isSelected={false}
-        onSelect={() => {}}
-      />
+      <table>
+        <tbody>
+          <TableRow
+            item={{
+              name: "file2.txt",
+              status: "scheduled",
+            }}
+            columns={columns}
+            isSelected={false}
+            onSelect={() => {}}
+          />
+        </tbody>
+      </table>
     );
 
     const checkbox = screen.getByRole("checkbox");
@@ -78,12 +94,16 @@ describe("TableRow component", () => {
 
   test("checkbox is not disabled when status is 'available'", () => {
     render(
-      <TableRow
-        item={mockFile}
-        columns={columns}
-        isSelected={false}
-        onSelect={() => {}}
-      />
+      <table>
+        <tbody>
+          <TableRow
+            item={mockFile}
+            columns={columns}
+            isSelected={false}
+            onSelect={() => {}}
+          />
+        </tbody>
+      </table>
     );
 
     const checkbox = screen.getByRole("checkbox");
@@ -94,12 +114,16 @@ describe("TableRow component", () => {
     const mockOnSelect = jest.fn();
 
     render(
-      <TableRow
-        item={mockFile}
-        columns={columns}
-        isSelected={false}
-        onSelect={mockOnSelect}
-      />
+      <table>
+        <tbody>
+          <TableRow
+            item={mockFile}
+            columns={columns}
+            isSelected={false}
+            onSelect={mockOnSelect}
+          />
+        </tbody>
+      </table>
     );
 
     const checkbox = screen.getByRole("checkbox");
