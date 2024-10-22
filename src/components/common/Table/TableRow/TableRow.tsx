@@ -22,6 +22,8 @@ const TableRow = <T extends { status: string }>({
           checked={isSelected}
           onChange={onSelect}
           disabled={item.status !== "available"}
+          aria-checked={isSelected}
+          aria-label="Select file"
         />
       </td>
       {columns.map((col, index) => (
