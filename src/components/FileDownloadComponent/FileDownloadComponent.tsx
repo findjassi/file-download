@@ -3,6 +3,7 @@ import { fetchFiles } from "../../services/fileService";
 import ListHeader from "../common/ListHeader/ListHeader";
 import Table from "../common/Table/Table";
 import { File } from "../../types/types";
+import "./FileDownloadComponent.css";
 
 const columns: any = [
   { header: "Name", key: "name" },
@@ -15,6 +16,8 @@ const FileDownloadComponent = () => {
   const [files, setFiles] = useState<File[]>([]);
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
 
+  const availableFiles = files.filter((file) => file.status === "available");
+
   useEffect(() => {
     fetchFiles().then(setFiles);
   }, []);
@@ -26,12 +29,37 @@ const FileDownloadComponent = () => {
     setSelectedFiles(updatedSelected);
   };
 
+  const toggleSelectAll = () => {
+    if (selectedFiles.length === availableFiles.length) {
+      setSelectedFiles([]);
+    } else {
+      setSelectedFiles(availableFiles);
+    }
+  };
+
+  const handleDownload = () => {
+    const downloadFiles = selectedFiles.map(
+      (file) => `${file.device}: ${file.path}`
+    );
+    alert(`Downloading: \n${downloadFiles.join("\n")}`);
+  };
+
+  const isAllSelected = selectedFiles.length === availableFiles.length;
+  const isIndeterminate = selectedFiles.length > 0 && !isAllSelected;
+
   return (
-    <div>
+    <div className="file-download-component">
       <h1>File Download Component</h1>
 
       {/* ListHeader */}
-      <ListHeader />
+      <ListHeader
+        isAllSelected={isAllSelected}
+        isIndeterminate={isIndeterminate}
+        selectedCount={selectedFiles.length}
+        actionLabel="Download Selected"
+        toggleSelectAll={toggleSelectAll}
+        onAction={handleDownload}
+      />
 
       {/* Table Component */}
       <Table

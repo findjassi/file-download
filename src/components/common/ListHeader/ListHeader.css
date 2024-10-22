@@ -1,0 +1,29 @@
+.list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+.list-header button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.list-header button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.list-header input[type="checkbox"] {
+    cursor: pointer;
+}
+  

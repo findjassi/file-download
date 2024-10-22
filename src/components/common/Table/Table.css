@@ -3,8 +3,12 @@
     border-collapse: collapse;
   }
   
-  .table th, .table td {
+  .table tr {
     border: 1px solid #ddd;
+    height: 45px;
+  }
+
+  .table th, .table td {
     padding: 8px;
     text-align: left;
   }
